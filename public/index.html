@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="dist/index.js" type="module"></script>
+    <title>Document</title>
+    <style>
+        #list {
+            list-style: none;
+            padding: 0;
+        }
+        h4 {
+          font-family: Arial, Helvetica, sans-serif;
+        }
+        .strikethrough {
+          text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+  <h4>Lista de Tarefas</h4>
+  <form id="new-task-form">
+    <input type="text" id="new-task-title">  
+    <button type="submit">Adicionar tarefa</button>
+  </form>
+  <ul id="list"></ul>
+  <button id="reset-list">Remover todas as tarefas</button>
+  <!-- Remove todos os itens da lista -->
+</body>
+</html> 
