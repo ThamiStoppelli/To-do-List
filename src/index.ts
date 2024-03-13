@@ -4,7 +4,6 @@
 //   resize: true,
 //   useWorker: true,
 // })({ particleCount: 200, spread: 200 });
-
 import { v4 as uuidV4 } from 'uuid'
 
 type Task = {
@@ -41,8 +40,11 @@ form?.addEventListener("submit", e => {
 
 function addListItem(task: Task) {
   const item = document.createElement("li")
+
+  item.classList.add("task-item");
   const label = document.createElement("label")
   const checkbox = document.createElement("input")
+  const removeButton = document.createElement("button");
 
   if (task.completed) {
     label.classList.add("strikethrough")
@@ -60,7 +62,25 @@ function addListItem(task: Task) {
   checkbox.type = "checkbox"
   checkbox.checked = task.completed
   label.append(checkbox, task.title)
-  item.append(label)
+
+  removeButton.classList.add("remove-button");
+  const trashIcon = document.createElement("img");
+  trashIcon.src = "trash-icon-black.svg";
+  trashIcon.alt = "Remover";
+  removeButton.appendChild(trashIcon);
+  
+  // removeButton.textContent = "Remover";
+
+  removeButton.addEventListener("click", () => {
+    const index = tasks.findIndex(t => t.id === task.id);
+    if (index !== -1) {
+      tasks.splice(index, 1);
+      item.remove();
+      saveTasks();
+    }
+  });
+
+  item.append(label, removeButton);
   list?.append(item)
 }
 
