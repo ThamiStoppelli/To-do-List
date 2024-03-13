@@ -68,7 +68,7 @@ function addListItem(task: Task) {
   trashIcon.src = "trash-icon-black.svg";
   trashIcon.alt = "Remover";
   removeButton.appendChild(trashIcon);
-  
+
   // removeButton.textContent = "Remover";
 
   removeButton.addEventListener("click", () => {
