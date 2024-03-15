@@ -4,6 +4,7 @@
     "build": "snowpack build"
   },
   "dependencies": {
+    "@types/react": "^18.2.65",
     "canvas-confetti": "^1.2.0",
     "uuid": "^9.0.1"
   },

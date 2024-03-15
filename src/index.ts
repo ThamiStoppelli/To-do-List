@@ -5,6 +5,7 @@
 //   useWorker: true,
 // })({ particleCount: 200, spread: 200 });
 import { v4 as uuidV4 } from 'uuid'
+// import { useState } from "react"
 
 type Task = {
   id: string 
@@ -21,10 +22,17 @@ const remove = document.querySelector<HTMLButtonElement>("#reset-list")
 const tasks: Task[] = loadTasks()
 tasks.forEach(addListItem)
 
+const modal = document.getElementById("modal");
+const modalMessage = document.getElementById("modal-message");
+const confirmButton = document.getElementById("confirm-btn");
+const closeButton = document.getElementById("close-btn");
+
+// const [open, setOpen] = useState<boolean>(false)
+
 form?.addEventListener("submit", e => {
   e.preventDefault()
 
-  if (input?.value == "" || input?.value == null) return //continue with the code (this line ensures the input actually exists, after this statement the input is no longer null)
+  if (input?.value == "" || input?.value == null) return //this line ensures the input actually exists, after this statement the input is no longer null
 
   const newTask: Task = {
     id: uuidV4(),
@@ -72,11 +80,17 @@ function addListItem(task: Task) {
   // removeButton.textContent = "Remover";
 
   removeButton.addEventListener("click", () => {
+    //setOpen(true)
     const index = tasks.findIndex(t => t.id === task.id);
     if (index !== -1) {
-      tasks.splice(index, 1);
-      item.remove();
-      saveTasks();
+      const message = "Deseja realmente remover este item?";
+      
+      showModal(message, () => {
+        tasks.splice(index, 1);
+        item.remove();
+        saveTasks();
+        closeModal();
+      })
     }
   });
 
@@ -95,10 +109,35 @@ function loadTasks(): Task[] {
 }
 
 remove?.addEventListener("click", () => {
-  tasks.length = 0
-  localStorage.clear
-  window.location.reload()
-  saveTasks()
+  const message = "Deseja realmente remover todos os itens da Lista de Tarefas?";
+      
+  showModal(message, () => {
+    tasks.length = 0
+    localStorage.clear
+    window.location.reload()
+    saveTasks()
+    closeModal();
+  })
 });
 
 //input? or form? -> optional chaining: if this thing exists give me the value, if it doesn't return undefined
+
+function showModal(message: string, onConfirm: () => void) {
+  if (modalMessage == null) return
+  modalMessage.innerText = message;
+  modal?.classList.add("show-modal");
+
+  if (confirmButton == null) return
+  confirmButton.onclick = () => {
+    onConfirm();
+  };
+
+  if (closeButton == null) return
+  closeButton.onclick = () => {
+    closeModal();
+  };
+}
+
+function closeModal() {
+  modal?.classList.remove("show-modal");
+}
