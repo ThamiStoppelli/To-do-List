@@ -5,7 +5,6 @@
 //   useWorker: true,
 // })({ particleCount: 200, spread: 200 });
 import { v4 as uuidV4 } from 'uuid'
-// import { useState } from "react"
 
 type Task = {
   id: string 
@@ -48,7 +47,6 @@ form?.addEventListener("submit", e => {
 
 function addListItem(task: Task) {
   const item = document.createElement("li")
-
   item.classList.add("task-item");
   const label = document.createElement("label")
   const checkbox = document.createElement("input")
@@ -77,10 +75,7 @@ function addListItem(task: Task) {
   trashIcon.alt = "Remover";
   removeButton.appendChild(trashIcon);
 
-  // removeButton.textContent = "Remover";
-
   removeButton.addEventListener("click", () => {
-    //setOpen(true)
     const index = tasks.findIndex(t => t.id === task.id);
     if (index !== -1) {
       const message = "Deseja realmente remover este item?";
@@ -96,6 +91,7 @@ function addListItem(task: Task) {
 
   item.append(label, removeButton);
   list?.append(item)
+  saveTasks()
 }
 
 function saveTasks() {
@@ -136,8 +132,11 @@ function showModal(message: string, onConfirm: () => void) {
   closeButton.onclick = () => {
     closeModal();
   };
+
+  saveTasks()
 }
 
 function closeModal() {
   modal?.classList.remove("show-modal");
+  saveTasks()
 }
